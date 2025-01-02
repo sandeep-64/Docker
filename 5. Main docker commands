@@ -13,7 +13,11 @@ A: You can:
   ```
 - View local images 
   ```
-  docker images command
+  docker images 
+  ```
+- removes unused images
+  ```
+  docker rmi [image] - 
   ```
 - See different versions/tags of images in Docker Hub
 - The "latest" tag is used by default if no version is specified
@@ -54,6 +58,41 @@ Q: How can you run multiple versions of the same application?
 A: You can:
 - Pull different versions using tags (e.g., redis:4.0 vs redis:5.0.6)
 - Run multiple containers with different versions simultaneously
+
+Q: What's the difference between docker run and docker start?
+A:
+- docker run: Creates a new container from an image with specified attributes
+  - Used when starting a container for the first time
+  - Can specify options like ports (-p), detach mode (-d), names, etc.
+- docker start: Restarts an existing stopped container
+  - Retains all attributes defined during container creation
+  - Cannot modify original container settings
+
+Q: What are the essential options for docker run?
+A:
+- -d: Run container in detached mode (background)
+- -p HOST_PORT:CONTAINER_PORT: Bind ports
+- --name CONTAINER_NAME: Assign custom name to container
+Example:
+``` 
+docker run -d -p 6001:6379 --name redis-latest redis
+```
+Q: How do you troubleshoot Docker containers?
+A: Two main commands:
+1. docker logs [container_id/name]: View container logs
+2. docker exec -it [container_id/name] bash: 
+   - Get an interactive terminal inside the container
+   - Navigate filesystem
+   - Check configurations
+   - View environment variables
+
+Q: How do you manage running containers?
+A:
+- docker ps: Show running containers
+- docker ps -a: Show all containers (including stopped)
+- docker stop [container_id/name]: Stop a container
+- Use meaningful names with --name flag for easier management
+- Example: docker run --name redis-older redis:4.0
 - Each container can use the same port internally without conflict
 - Use to run specific versions
   ```
