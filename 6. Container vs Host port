@@ -16,6 +16,11 @@ A: Yes:
   Container 1: host:6000 -> container:3000
   Container 2: host:6001 -> container:3000
   ```
+  ```
+  Container ID	Image	        Command	              Created	            Status	                    Ports       	Names
+  5cdac31326	  redis:4.0	"docker-entrypoint..."	1 second ago	      Up 4 seconds	      0.0.0.0:4001->6379/tcp	dreamy_bell
+  7a6ef66e6da	  redis:4.0	"docker-entrypoint..."	About a minute ago	Up About a minute	  0.0.0.0:4000->6379/tcp	heuristic_ardinghelli
+  ```
 
 Q: What happens if you don't specify port binding?
 A: Without port binding:
