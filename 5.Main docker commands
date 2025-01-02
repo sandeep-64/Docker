@@ -1,1 +1,34 @@
+Q: What is Docker Hub?
+A: Docker Hub is a repository where:
+- All artifacts are images (not containers)
+- Contains Docker official images
+- Users can pull images to their local machine
+- Images have different versions/tags available
 
+Q: How do you work with Docker images?
+A: You can:
+- Pull images using docker pull [image-name]
+- View local images using docker images command
+- See different versions/tags of images in Docker Hub
+- The "latest" tag is used by default if no version is specified
+
+Q: How do you create and manage containers?
+A: Several key commands:
+- docker run [image-name] - creates and starts a container
+- docker ps - shows running containers
+- docker ps -a - shows all containers (running and stopped)
+- docker stop [container-id] - stops a container
+- docker start [container-id] - starts a stopped container
+
+Q: What's the difference between attached and detached modes?
+A: Two running modes:
+- Attached mode (default): Shows container output in terminal, stops with Ctrl+C
+- Detached mode (-d flag): Runs in the background, returns container ID
+- Example: docker run -d redis
+
+Q: How can you run multiple versions of the same application?
+A: You can:
+- Pull different versions using tags (e.g., redis:4.0 vs redis:5.0.6)
+- Run multiple containers with different versions simultaneously
+- Each container can use the same port internally without conflict
+- Use docker run [image-name]:[tag] to run specific versions
