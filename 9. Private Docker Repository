@@ -1,1 +1,139 @@
+Q: What is a Docker registry and why do we need it?
+A: A Docker registry is a storage and distribution system for Docker images. We need it to:
+- Share images across team members
+- Deploy applications to different environments
+- Version control Docker images
+- Maintain private/secure storage of proprietary images
 
+Q: What's the difference between Docker Hub and private registries?
+A: 
+- Docker Hub:
+  - Public registry service by Docker
+  - Free for public images
+  - Uses shortened image names (e.g., mongodb:latest)
+- Private registries (like AWS ECR):
+  - Requires full registry domain in image names
+  - Requires authentication
+  - Provides better security and control
+  - Better for proprietary code
+
+Q: How do I tag a Docker image for a private registry?
+A:
+```
+# Format
+docker tag SOURCE_IMAGE[:TAG] REGISTRY_DOMAIN/REPOSITORY[:TAG]
+
+# Example for AWS ECR
+docker tag myapp:1.0 123456789.dkr.ecr.region.amazonaws.com/myapp:1.0
+```
+
+Q: What's the workflow for pushing an image to AWS ECR?
+A:
+1. Login to ECR:
+```
+aws ecr get-login-password --region region | docker login --username AWS --password-stdin 123456789.dkr.ecr.region.amazonaws.com
+```
+2. Build image:
+```
+docker build -t myapp:1.0 .
+```
+3. Tag image:
+```
+docker tag myapp:1.0 123456789.dkr.ecr.region.amazonaws.com/myapp:1.0
+```
+4. Push image:
+```
+docker push 123456789.dkr.ecr.region.amazonaws.com/myapp:1.0
+```
+
+Q: How do I manage different versions of the same image?
+A:
+- Use meaningful tags for versions (e.g., 1.0, 1.1)
+- Each tag creates a new version in the same repository
+- Example:
+```
+# Build new version
+docker build -t myapp:1.1 .
+docker tag myapp:1.1 123456789.dkr.ecr.region.amazonaws.com/myapp:1.1
+docker push 123456789.dkr.ecr.region.amazonaws.com/myapp:1.1
+```
+
+Q: What are common issues with private registries?
+A:
+1. Authentication errors:
+   - Solution: Ensure proper login and credentials
+2. Permission denied:
+   - Solution: Check IAM roles and permissions
+3. Image not found:
+   - Solution: Verify image name and tag exactly match
+4. Push rejected:
+   - Solution: Ensure repository exists and you have push access
+
+Q: How do I clean up old images?
+A:
+```
+# Remove local image
+docker rmi image-name:tag
+
+# Remove from ECR (AWS CLI)
+aws ecr batch-delete-image \
+    --repository-name myapp \
+    --image-ids imageTag=1.0
+```
+
+Q: What are best practices for working with private registries?
+A:
+1. Version Control:
+   - Use specific version tags
+   - Avoid using 'latest' tag in production
+   - Document version changes
+
+2. Security:
+   - Regular credential rotation
+   - Implement image scanning
+   - Use private repositories for sensitive code
+
+3. Organization:
+   - One repository per application
+   - Consistent naming conventions
+   - Regular cleanup of unused images
+
+Q: How do I integrate private registry with CI/CD?
+A:
+1. Store registry credentials securely
+2. Automate login process
+3. Example Jenkins pipeline:
+```
+pipeline {
+    environment {
+        REGISTRY_URL = '123456789.dkr.ecr.region.amazonaws.com'
+    }
+    stages {
+        stage('Push to ECR') {
+            steps {
+                script {
+                    // Login
+                    sh 'aws ecr get-login-password --region region | docker login --username AWS --password-stdin ${REGISTRY_URL}'
+                    
+                    // Build and push
+                    sh """
+                        docker build -t myapp:${BUILD_NUMBER} .
+                        docker tag myapp:${BUILD_NUMBER} ${REGISTRY_URL}/myapp:${BUILD_NUMBER}
+                        docker push ${REGISTRY_URL}/myapp:${BUILD_NUMBER}
+                    """
+                }
+            }
+        }
+    }
+}
+```
+
+Q: What are the limitations of AWS ECR?
+A:
+- Maximum 1000 image tags per repository
+- Image size limit of 10GB
+- Push rate limit of 10 concurrent uploads
+- Authentication token expires after 12 hours
+- Region-specific repositories
+
+This Q&A covers the most common scenarios and issues when working with Docker registries, particularly AWS ECR.
