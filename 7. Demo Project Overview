@@ -42,3 +42,54 @@ A:
 - Quick Setup: New team members can start quickly
 - Isolated Testing: Containerized environment for testing
 - Simplified Dependencies: No need to install databases or services locally
+
+Q: What's the basic application setup in this example?
+A:
+- Simple JavaScript application with:
+  - index.html for frontend
+  - Node.js backend serving on port 3000
+  - User profile page with edit functionality
+  - Currently no data persistence (changes lost on refresh)
+
+Q: Why do we need Docker containers for this development setup?
+A:
+- Need database for data persistence
+- Docker provides easy way to add MongoDB without local installation
+- Additional container (Mongo Express) provides database UI management
+- Makes development process easier and more efficient
+
+Q: How do we set up the required Docker containers?
+A:
+1. Pull required images from Docker Hub:
+   ```
+   docker pull mongo
+   docker pull mongo-express
+   ```
+2. Verify images are available locally:
+   ```
+   docker images
+   ```
+   Should show both mongo and mongo-express images
+
+Q: What's the purpose of Mongo Express?
+A:
+- Provides web-based UI for MongoDB management
+- Makes it easier to:
+  - View database contents
+  - Monitor application updates
+  - Manage database without command line
+- Runs in separate container connected to MongoDB container
+
+Q: What are the next steps after pulling the images?
+A:
+1. Run MongoDB container
+2. Run Mongo Express container
+3. Configure containers to communicate with each other
+4. Connect application to MongoDB container
+5. Test persistence by saving and refreshing the page
+
+This setup creates a complete development environment with:
+- Frontend application
+- Backend server
+- Database (MongoDB in Docker)
+- Database management UI (Mongo Express in Docker)
