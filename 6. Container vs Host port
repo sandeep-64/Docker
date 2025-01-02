@@ -10,7 +10,7 @@ A: Port binding is:
 Q: Can multiple containers use the same port internally?
 A: Yes:
 - Multiple containers can use the same internal port (e.g., 3000)
-- BUT they must be bound to different host ports
+- But they must be bound to different host ports
 - Example:
   ```
   Container 1: host:6000 -> container:6379
