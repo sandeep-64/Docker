@@ -1,0 +1,117 @@
+Q: What is Docker Compose and why is it better than Docker run commands?
+A:
+- A tool for defining and running multi-container Docker applications
+- Uses YAML files to configure application services
+- Simplifies container management by:
+  1. Replacing long docker run commands
+  2. Managing multiple containers easily
+  3. Automatic network creation
+  4. Structured, readable configuration
+
+Q: How do you convert a Docker run command to Docker Compose format?
+A:
+```
+# Docker run command
+docker run -d \
+-p 27017:27017 \
+-e MONGO_INITDB_ROOT_USERNAME=admin \
+-e MONGO_INITDB_ROOT_PASSWORD=password \
+--name mongodb \
+--net mongo-network \
+mongo
+```
+Becomes:
+```
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+```
+
+Q: What are the basic Docker Compose commands?
+A:
+```
+# Start containers
+docker-compose -f filename.yaml up
+
+# Stop and remove containers
+docker-compose -f filename.yaml down
+
+# Start in detached mode
+docker-compose -f filename.yaml up -d
+```
+
+Q: How does networking work in Docker Compose?
+A:
+- Automatically creates a default network
+- Containers can communicate using service names
+- No need to manually create networks
+- Network is removed when running docker-compose down
+
+Q: What's the basic structure of a docker-compose.yaml file?
+A:
+```
+version: '3'
+services:
+  service1:
+    image: image_name
+    ports:
+      - host_port:container_port
+    environment:
+      - KEY=value
+  service2:
+    image: another_image
+     more configuration
+```
+
+Q: What happens to data when using Docker Compose?
+A:
+- Data is not persistent by default
+- When containers are removed (docker-compose down), data is lost
+- Solution: Use volumes for persistence
+- Volumes need to be configured in docker-compose.yaml
+
+Q: How do you handle multiple containers with dependencies?
+A:
+```
+version: '3'
+services:
+  mongodb:
+    image: mongo
+     mongodb config...
+  
+  mongo-express:
+    image: mongo-express
+    depends_on:
+      - mongodb
+     mongo-express config...
+```
+
+Q: What are the main advantages of using Docker Compose?
+A:
+1. Simplified Management
+   - Single command to manage multiple containers
+   - Easy to read/modify configurations
+
+2. Automated Networking
+   - Auto-creates networks
+   - Service discovery between containers
+
+3. Version Control
+   - Configuration as code
+   - Easy to share and maintain
+
+4. Development Environment
+   - Consistent environment setup
+   - Easy to replicate across team members
+
+5. Service Dependencies
+   - Can define start-up order
+   - Manages inter-service relationships
+
+This setup provides a more manageable way to handle multiple containers compared to using individual docker run commands.
