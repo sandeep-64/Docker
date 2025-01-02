@@ -1,0 +1,44 @@
+Q: What is a typical Docker development workflow?
+A: A typical workflow consists of three main stages:
+1. Local Development
+2. CI/CD Pipeline
+3. Development Server Deployment
+
+Q: How is Docker used in local development?
+A:
+- Developers write application code locally (e.g., JavaScript)
+- Database (e.g., MongoDB) runs in Docker container instead of local installation
+- Additional tools (e.g., MongoDB Express UI) run in separate containers
+- Benefits: No local DB installation needed, consistent environment, easy management
+
+Q: How does the CI/CD process work with Docker?
+A:
+1. Developer pushes code to Git repository
+2. CI tool (e.g., Jenkins) triggered automatically
+3. CI process:
+   - Builds application
+   - Creates Docker image
+   - Pushes image to private repository
+   - Triggers deployment
+
+Q: Why use a private Docker repository?
+A:
+- Security: Keeps proprietary code and images private
+- Access Control: Only authorized users/systems can access
+- Company Control: Maintains internal control over image distribution
+
+Q: What happens during deployment to development server?
+A:
+1. Server pulls required images:
+   - Custom application image from private repository
+   - Dependencies (like MongoDB) from Docker Hub
+2. Containers are configured to communicate
+3. Application becomes available for testing
+
+Q: What are the advantages of this Docker workflow?
+A:
+- Environment Consistency: Same setup across development, testing, deployment
+- Easy Management: Simple database and application management
+- Quick Setup: New team members can start quickly
+- Isolated Testing: Containerized environment for testing
+- Simplified Dependencies: No need to install databases or services locally
