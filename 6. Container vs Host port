@@ -2,7 +2,10 @@ Q: What is port binding in Docker?
 A: Port binding is:
 - A connection between your host machine's port and a container's port
 - Allows external applications to communicate with containers
-- Format: docker run -p [HOST_PORT]:[CONTAINER_PORT] [IMAGE]
+- Format: 
+  ```
+  docker run -p [HOST_PORT]:[CONTAINER_PORT] [IMAGE]
+  ```
 
 Q: Can multiple containers use the same port internally?
 A: Yes:
