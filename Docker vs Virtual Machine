@@ -1,1 +1,26 @@
+Q: What are the two main layers of an operating system?
+A: An operating system consists of two layers:
+- Operating system kernel
+- Applications layer
 
+Q: What is the primary function of the kernel layer?
+A: The kernel layer communicates directly with hardware components such as CPU, memory, and other hardware components.
+
+Q: How do different Linux distributions relate to the kernel?
+A: Different Linux distributions (like Ubuntu, Debian, Linux Mint) all use the same Linux kernel but implement different:
+- Graphical user interfaces
+- File systems
+- Applications on top of the kernel
+
+Q: Why can Linux distributions look and feel different despite using the same kernel?
+A: They can look and feel different because while they share the same Linux kernel, they implement different:
+- Applications
+- User interfaces
+- System configurations
+Even though the underlying kernel remains the same
+
+Q: Can you name some examples of Linux distributions mentioned?
+A: Yes, the examples mentioned are:
+- Ubuntu
+- Debian
+- Linux Mint
