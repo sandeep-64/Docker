@@ -82,10 +82,10 @@ A:
 
 Q: What are the next steps after pulling the images?
 A:
-1. Run MongoDB container
+1. Run the MongoDB container
 2. Run Mongo Express container
 3. Configure containers to communicate with each other
-4. Connect application to MongoDB container
+4. Connect the application to the MongoDB container
 5. Test persistence by saving and refreshing the page
 
 This setup creates a complete development environment with:
@@ -93,3 +93,27 @@ This setup creates a complete development environment with:
 - Backend server
 - Database (MongoDB in Docker)
 - Database management UI (Mongo Express in Docker)
+
+Q: How do you work with Docker networks?
+A:
+1. List existing networks:
+   ```
+   docker network ls
+   ```
+
+2. Create a new network:
+   ```
+   docker network create mongo-network
+   ```
+
+Q: What's the planned architecture for this application?
+A:
+1. Docker Network Components:
+   - MongoDB container
+   - Mongo Express container
+   - (Later) Node.js application container
+
+2. External Components:
+   - Browser accessing the application via localhost:port
+   - Initially, Node.js running on host
+   
