@@ -13,8 +13,8 @@ A: Yes:
 - But they must be bound to different host ports
 - Example:
   ```
-  Container 1: host:6000 -> container:6379
-  Container 2: host:6001 -> container:6379
+  Container 1: host:6000 -> container:3000
+  Container 2: host:6001 -> container:3000
   ```
 
 Q: What happens if you don't specify port binding?
