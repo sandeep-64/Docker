@@ -1,1 +1,39 @@
+Q: What are the basic Docker commands for managing images?
+A: Key commands include:
+- docker pull [image] - downloads image from repository
+- docker images - lists all local images
+- docker run [image] - pulls image (if not local) and starts container
+- docker rmi [image] - removes unused images
 
+Q: What's the difference between docker run and docker start?
+A:
+- docker run: Creates a new container from an image with specified attributes
+  - Used when starting a container for the first time
+  - Can specify options like ports (-p), detach mode (-d), names, etc.
+- docker start: Restarts an existing stopped container
+  - Retains all attributes defined during container creation
+  - Cannot modify original container settings
+
+Q: What are the essential options for docker run?
+A:
+- -d: Run container in detached mode (background)
+- -p HOST_PORT:CONTAINER_PORT: Bind ports
+- --name CONTAINER_NAME: Assign custom name to container
+Example: docker run -d -p 6001:6379 --name redis-latest redis
+
+Q: How do you troubleshoot Docker containers?
+A: Two main commands:
+1. docker logs [container_id/name]: View container logs
+2. docker exec -it [container_id/name] bash: 
+   - Get an interactive terminal inside the container
+   - Navigate filesystem
+   - Check configurations
+   - View environment variables
+
+Q: How do you manage running containers?
+A:
+- docker ps: Show running containers
+- docker ps -a: Show all containers (including stopped)
+- docker stop [container_id/name]: Stop a container
+- Use meaningful names with --name flag for easier management
+- Example: docker run --name redis-older redis:4.0
