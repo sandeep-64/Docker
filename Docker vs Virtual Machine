@@ -24,3 +24,35 @@ A: Yes, the examples mentioned are:
 - Ubuntu
 - Debian
 - Linux Mint
+
+Q: What does Docker virtualize in an operating system?
+A: Docker virtualizes only the applications layer. When you download a Docker image, it contains:
+- The applications layer of the operating system
+- Additional applications installed on top of it
+- It uses the kernel of the host system, as it doesn't have its own kernel
+
+Q: How does virtualization in Virtual Machines differ from Docker?
+A: Virtual machines virtualize the complete operating system, meaning:
+- They have their own applications layer
+- They have their own kernel
+- They don't use the host system's kernel
+
+Q: What are the main differences between Docker and Virtual Machines?
+A: There are three key differences:
+- Size: Docker images are typically a few megabytes, while VM images can be several gigabytes
+- Speed: Docker containers start much faster than VMs since they don't need to boot up a complete OS
+- Compatibility: VMs can run on any host OS, while Docker has some compatibility limitations
+
+Q: What compatibility issues exist with Docker?
+A: Docker faces compatibility challenges such as:
+- Linux-based Docker images might not be compatible with Windows kernel (versions below Windows 10)
+- Similar issues exist with older Mac versions
+- Users need to check if their host can run Docker natively
+- Docker Toolbox is used as a workaround to abstract away kernel compatibility issues
+
+Q: What is Docker Toolbox and when is it used?
+A: Docker Toolbox is:
+- A technology that abstracts away the kernel
+- Used to make it possible for hosts to run different Docker images
+- Implemented as a workaround when native Docker compatibility isn't available
+- Particularly useful for older Windows and Mac systems
