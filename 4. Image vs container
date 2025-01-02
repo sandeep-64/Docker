@@ -1,0 +1,38 @@
+Q: What is a container in Docker?
+A: A container is:
+- The running environment for an image
+- Part of a container runtime
+- Provides the necessary environmental setup including:
+  - Virtual file system for logs and configuration files
+  - Environmental configurations and variables
+  - Port bindings for application communication
+
+Q: What are the key components that a container provides?
+A: A container provides:
+- File system (virtual)
+- Environmental configuration
+- Port bindings
+- Runtime environment for the application image
+
+Q: How does a container's file system differ from the host machine?
+A: The container's file system:
+- Is virtual
+- Has its own abstraction of an operating system
+- Is separate from the host machine's file system
+- Has its own environmental setup distinct from the host
+
+Q: What can run inside a container?
+A: Containers can run various applications such as:
+- Postgres
+- Redis
+- Other applications that need:
+  - File system access
+  - Configuration storage
+  - Log file storage
+  - Environmental variables
+
+Q: How does container networking work?
+A: Containers have:
+- Bound ports that enable communication
+- Allow external systems to communicate with the application running inside
+- Provide network isolation from the host system
