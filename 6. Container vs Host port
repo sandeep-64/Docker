@@ -6,6 +6,10 @@ A: Port binding is:
   ```
   docker run -p [HOST_PORT]:[CONTAINER_PORT] [IMAGE]
   ```
+  ```
+  docker run -p 6000:6379 redis:4.0
+  docker run -p 6001:6379 redis
+  ```
 
 Q: Can multiple containers use the same port internally?
 A: Yes:
