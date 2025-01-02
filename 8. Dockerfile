@@ -122,3 +122,147 @@ A:
    - Follow consistent naming conventions
 
 This provides a foundation for understanding how to package applications into Docker containers using Dockerfiles.
+
+Q: What's the basic workflow for containerizing a Node.js application?
+A:
+1. Create Dockerfile
+2. Build image
+3. Run container
+4. Test application
+5. Push to registry
+
+Q: What's a proper Dockerfile for a Node.js application?
+A:
+```
+# Use specific version instead of latest
+FROM node:13-alpine
+
+# Environment variables
+ENV MONGO_DB_USERNAME=admin
+ENV MONGO_DB_PASSWORD=password
+
+# Create app directory
+RUN mkdir -p /home/app
+
+# Copy application files
+COPY ./app /home/app
+
+# Set working directory
+WORKDIR /home/app
+
+# Start application
+CMD ["node", "server.js"]
+```
+
+Q: How do you build and manage Docker images?
+A:
+```
+# Build image
+docker build -t myapp:1.0 .
+
+# List images
+docker images
+
+# Remove image (must remove containers first)
+docker rm <container-id>
+docker rmi myapp:1.0
+
+# Run container
+docker run -d myapp:1.0
+
+# Enter container
+docker exec -it <container-id> /bin/sh
+```
+
+Q: What are best practices for application files in Docker?
+A:
+1. Use .dockerignore:
+```
+node_modules
+Dockerfile
+docker-compose.yaml
+.git
+.env
+```
+
+2. Organize application files:
+```
+project/
+├── app/               Only application files
+│   ├── server.js
+│   ├── package.json
+│   └── src/
+├── Dockerfile         Build configuration
+└── docker-compose.yaml
+```
+
+3. Copy only necessary files:
+```
+COPY ./app /home/app
+```
+
+Q: How do you check container environment?
+A:
+```
+# Enter container
+docker exec -it <container-id> /bin/sh
+
+# Check environment variables
+env
+
+# Verify files
+ls /home/app
+
+# Check processes
+ps aux
+
+# Exit container
+exit
+```
+
+Q: What are common issues and solutions?
+A:
+1. Command not found:
+   - Try /bin/sh instead of /bin/bash
+   - Alpine uses different shell
+
+2. Can't delete image:
+   - Stop container first: docker stop <container-id>
+   - Remove container: docker rm <container-id>
+   - Then remove image: docker rmi <image-id>
+
+3. File not found:
+   - Check WORKDIR setting
+   - Verify file paths in COPY commands
+   - Ensure files exist in build context
+
+Q: How do you integrate with docker-compose?
+A:
+```
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_DB_USERNAME=admin
+      - MONGO_DB_PASSWORD=password
+    depends_on:
+      - mongodb
+  
+  mongodb:
+    image: mongo
+     mongodb config...
+```
+
+Key points to remember:
+1. Always use specific versions for base images
+2. Copy only necessary files
+3. Use .dockerignore to exclude unnecessary files
+4. Set proper WORKDIR
+5. Use environment variables for configuration
+6. Test container internally before exposing ports
+7. Consider using multi-stage builds for production
+
+This provides a comprehensive guide for containerizing Node.js applications using Docker.
