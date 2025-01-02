@@ -117,3 +117,97 @@ A:
    - Browser accessing the application via localhost:port
    - Initially, Node.js running on host
    
+Q: What is Docker network and why do we need it?
+A:
+- An isolated environment where containers can communicate
+- Containers in the same network can communicate using just container names
+- No need for localhost or port mapping between containers
+- Created using docker network create mongo-network
+
+Q: How do you run MongoDB container with proper configuration?
+A:
+```
+docker run -d \
+-p 27017:27017 \
+-e MONGO_INITDB_ROOT_USERNAME=admin \
+-e MONGO_INITDB_ROOT_PASSWORD=password \
+--name mongodb \
+--net mongo-network \
+mongo
+```
+Key configurations:
+- -d: Detached mode
+- -p: Port mapping
+- -e: Environment variables for credentials
+- --name: Container name
+- --net: Network assignment
+
+Q: How do you set up Mongo Express container?
+A:
+```
+docker run -d \
+-p 8081:8081 \
+-e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
+-e ME_CONFIG_MONGODB_ADMINPASSWORD=password \
+-e ME_CONFIG_MONGODB_SERVER=mongodb \
+--net mongo-network \
+--name mongo-express \
+mongo-express
+```
+Important points:
+- Must use same network as MongoDB
+- References MongoDB by container name
+- Needs matching admin credentials
+
+Q: How do containers communicate in different scenarios?
+A:
+1. Container-to-Container (Same Network):
+   - Use container names directly
+   - Example: Mongo Express → MongoDB using container name
+
+2. External-to-Container:
+   - Use localhost:port
+   - Example: Browser → Node.js app → MongoDB
+
+Q: How do you verify if containers are running correctly?
+A:
+1. Check container status:
+   ```
+   docker ps
+   ```
+2. View container logs:
+   ```
+   docker logs mongodb
+   docker logs mongodb -f   Stream logs
+   ```
+3. Access Mongo Express UI:
+   - Open browser to localhost:8081
+
+Q: How do you connect Node.js application to MongoDB?
+A:
+```
+const uri = "mongodb://admin:password@localhost:27017";
+const client = new MongoClient(uri);
+```
+Note:
+- Use localhost because Node.js runs outside Docker
+- Use admin credentials (for demo only)
+- Port 27017 must be exposed in MongoDB container
+
+Q: What are the key components in this architecture?
+A:
+1. Docker Network (mongo-network)
+2. MongoDB Container
+3. Mongo Express Container
+4. Node.js Application
+5. Browser Interface
+
+Q: How do you manage database through Mongo Express?
+A:
+1. Access UI at localhost:8081
+2. Create new database (e.g., user_account_database)
+3. Create collections
+4. View and manage data through web interface
+5. Monitor database operations in real-time
+
+This setup provides a complete development environment with proper isolation, networking, and management capabilities.
