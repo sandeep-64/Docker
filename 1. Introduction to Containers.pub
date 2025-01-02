@@ -1,0 +1,99 @@
+Q: Why is it important to understand container basics first?
+A: It's essential to understand the basics of containers before jumping into advanced concepts like creating projects with containers or container interactions.
+
+Q: What is the recommended prerequisite for learning about containers?
+A: Learining virtual machines is recommended, as containers are an advancement to virtual machines, similar to how virtual machines were an advancement to physical servers.
+
+Q: What was the main problem with physical servers that led to virtualization?
+A: Resources (CPU, RAM, and Hardware) weren't being used completely on physical servers, which was especially problematic for organizations with thousands of servers paying for unused resources.
+
+Q: What is virtualization and how does it solve the resource problem?
+A: Virtualization, implemented through hypervisors, creates multiple virtual machines or virtual servers on top of physical servers, allowing for better resource utilization through logical separation.
+
+Q: What makes virtual machines secure?
+A: Virtual machines are secure because each application runs on its own VM with its own operating system, creating tight logical separation even though they run on the same physical server.
+
+Q: Why did organizations need to move from virtualization to containerization despite virtualization working well?
+A: Even after moving to virtual machines, organizations realized they weren't using the complete capacity of VMs. For example, if a VM had 25GB RAM, an application might only use 10GB RAM and 6 CPU at peak load, wasting significant resources.
+
+Q: What example was given to explain resource allocation in virtual machines?
+A: A physical server with 100GB RAM and 100 CPU could be divided into 4 VMs, each with 25GB RAM, but applications might only use a fraction (like 10GB RAM and 6 CPU) even at maximum threshold load.
+
+Q: What is a common scenario with EC2 instances that demonstrates resource waste?
+A: Most users rarely see "running out of memory" errors on their EC2 instances, indicating that they're using very few resources while paying for much more.
+
+Q: Why is resource waste a significant problem for large organizations?
+A: For organizations using around 1 million EC2 instances, having most instances wasting resources results in heavy financial losses.
+
+Q: How do containers compare to virtual machines in terms of security?
+A: Virtual machines are more secure than containers because:
+- VMs have a full operating system providing complete isolation
+- Containers don't have a complete operating system
+- Containers have logical isolation but it's not complete
+- Containers can talk to each other and the host operating system to share resources
+
+Here are the Q&A from this part of the transcript:
+
+Q: What are the two ways to create containers?
+A: 
+1. Model 1: Creating containers directly on top of physical servers with an operating system and Docker/containerization platform
+2. Model 2: Creating containers on top of virtual machines (like EC2 instances)
+
+Q: Why do organizations prefer Model 2 over Model 1?
+A: Organizations prefer Model 2 because:
+- Less maintenance overhead
+- No need to maintain physical data centers
+- No need for dedicated system administrators for physical servers
+- Most organizations are now using cloud providers
+
+Q: Why are containers considered lightweight in nature?
+A: Containers are lightweight because:
+- They don't have a complete operating system
+- They share resources from the base/host operating system
+- They only contain minimal operating system components (base image)
+- They are a package of application + application libraries + system dependencies
+
+Q: What is the size difference between virtual machine snapshots and container images?
+A: 
+- Virtual machine snapshots are typically 1-3GB or more
+- Container images are much smaller, around 100MB-500MB depending on dependencies and base image usage
+
+Q: What makes containers easy to ship or transfer?
+A: Containers are easy to ship because they are lightweight in nature, making them easier to move from one place to another, such as deploying to container platforms or Kubernetes.
+
+Q: What components make up a Docker container?
+A: A Docker container consists of:
+- Base image with system dependencies
+- Application code
+- Application libraries
+- System dependencies/packages
+
+
+Q: What is the basic workflow of creating a Docker container?
+A: The workflow consists of three main steps:
+1. Write a Dockerfile
+2. Convert Dockerfile to Docker image using docker build command
+3. Convert Docker image to container using docker run command
+
+Q: What is the role of Docker Engine in containerization?
+A: Docker Engine:
+- Receives all inputs and commands
+- Converts Dockerfile to Docker image
+- Creates containers from images
+- Manages the container lifecycle
+
+Q: What is a major drawback of Docker Engine?
+A: Docker Engine is a single point of failure (SPF) - if the Docker Engine goes down, all containers will stop working and won't respond.
+
+Q: What is Builder and why was it created?
+A: Builder is a tool created to solve several Docker challenges:
+- Addresses the single point of failure issue
+- Reduces the problem of multiple layers in Docker images
+- Offers more simplicity
+- Works well with Kubernetes
+- Allows using shell scripts instead of Dockerfiles
+- Can create Docker images or any OCI-compliant images
+
+Q: How does Builder differ from Docker in terms of configuration?
+A: Instead of writing Dockerfiles, Builder allows users to write shell scripts containing Builder commands to create images.
+

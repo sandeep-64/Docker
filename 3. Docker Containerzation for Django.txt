@@ -1,0 +1,55 @@
+Q: Do DevOps engineers need programming experience to containerize applications?
+A: Yes, DevOps engineers should have:
+- Basic understanding of how applications function
+- Knowledge of application workflows
+- Not necessarily need to write applications, but should understand how they work
+- Ability to analyze application structure and dependencies
+
+Q: What is the basic workflow of a Django application?
+A: The workflow consists of:
+1. Install Django and dependencies
+2. Create project using django-admin startproject
+3. Create application using django-admin startapp
+4. Configure settings.py for project settings
+5. Define views in views.py
+6. Create templates for rendering HTML
+7. Configure URLs in urls.py
+
+Q: What's the difference between ENTRYPOINT and CMD in Dockerfile?
+A:
+- ENTRYPOINT: Non-overrideable values/commands that cannot be changed when running container
+- CMD: Configurable values that can be modified when running the container
+- Example: ENTRYPOINT ["python3"] is fixed, while CMD ["manage.py", "runserver"] can be modified
+
+Q: What are the steps to containerize a Django application?
+A:
+1. Choose base image (e.g., Ubuntu)
+2. Set WORKDIR for source code
+3. Copy requirements.txt first
+4. Copy source code
+5. Install Python and dependencies
+6. Configure ENTRYPOINT and CMD
+7. Build and run with port mapping
+```
+FROM ubuntu
+
+WORKDIR /app
+
+COPY requirements.txt /app
+COPY devops /app
+
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip && \
+    pip install -r requirements.txt && \
+    cd devops
+
+ENTRYPOINT ["python3"]
+CMD ["manage.py", "runserver", "0.0.0.0:8000"]
+```
+
+Q: Why is port mapping important when running Django containers?
+A:
+- Container runs on internal port (8000)
+- Need to map container port to host port using -p flag
+- Example: docker run -p 8000:8000 maps container port 8000 to host port 8000
+- Must also configure security group inbound rules to allow traffic on the port
