@@ -1,1 +1,51 @@
+Q: What is a Docker network and why is it important?
+A:
+- An isolated environment where containers can communicate
+- Containers in same network can communicate using just container names
+- Provides network isolation and security
+- Simplifies container-to-container communication
 
+Q: How do containers communicate in different scenarios?
+A:
+1. Container-to-Container (Same Network):
+   - Use container names directly
+   - No need for localhost or ports
+   - Example: MongoDB and Mongo Express containers
+
+2. Host-to-Container:
+   - Use localhost and exposed ports
+   - Applications outside Docker network connect this way
+   - Example: Node.js application running on host
+
+Q: How do you work with Docker networks?
+A:
+1. List existing networks:
+   ```
+   docker network ls
+   ```
+
+2. Create new network:
+   ```
+   docker network create mongo-network
+   ```
+
+Q: What's the planned architecture for this application?
+A:
+1. Docker Network Components:
+   - MongoDB container
+   - Mongo Express container
+   - (Later) Node.js application container
+
+2. External Components:
+   - Browser accessing application via localhost:port
+   - Initially, Node.js running on host
+   
+Q: What are the benefits of this networking setup?
+A:
+- Isolated environment for database and management UI
+- Simplified communication between containers
+- Secure container-to-container communication
+- Easy to scale and add more containers
+- Clear separation between internal and external communications
+
+This network setup creates a foundation for a containerized development environment where components can communicate securely and efficiently.
