@@ -69,3 +69,50 @@ A: Without volumes, data is stored in the container's virtual file system and is
 
 Q: Can multiple containers share the same volume?
 A: Yes, multiple containers can mount and share the same volume, which is beneficial when containers need to share data between them.
+
+Q: What was the main purpose of using volumes in this demonstration?
+A: To persist MongoDB data so that the database information isn't lost when the container restarts.
+
+Q: How do you define volumes in a docker-compose file?
+A: Volumes are defined in two steps:
+1. First at the services level:
+```
+volumes:
+  mongo_data:
+    driver: local
+```
+2. Then in the service configuration:
+```
+services:
+  mongodb:
+    volumes:
+      - mongo_data:/data/db
+```
+
+Q: Where does Docker store volumes on different operating systems?
+A:
+- Windows: Program Data\Docker\volumes
+- Linux: /var/lib/docker/volumes
+- Mac: Similar to Linux, but stored in a Linux VM that Docker Desktop creates
+
+Q: What's the structure of a named volume directory?
+A: Each volume has:
+- A unique hash or named identifier
+- An _data directory containing the actual persisted files
+
+Q: How can you verify if volume persistence is working?
+A: You can:
+1. Create data in your application
+2. Restart the containers
+3. Check if the data is still available after restart
+
+Q: What's the difference between named and anonymous volumes in terms of directory structure?
+A: Both have similar directory structures with _data folders, but:
+- Named volumes have a recognizable name (easier to reference)
+- Anonymous volumes use random unique IDs
+
+Q: What is the default MongoDB data directory inside the container?
+A: /data/db - This is where MongoDB stores its data by default inside the container.
+
+Q: Why is the volume path different on Mac compared to Linux?
+A: On Mac, Docker runs in a Linux VM created by Docker Desktop, so the actual volume paths are inside this VM rather than directly on the host filesystem.
