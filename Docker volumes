@@ -1,0 +1,27 @@
+Q: What are Docker Volumes and why are they used?
+A: Docker Volumes are used for data persistence in Docker. They are especially important for databases and stateful applications, as they prevent data loss when containers are stopped, removed, or restarted.
+
+Q: How do Docker Volumes work?
+A: Docker Volumes work by connecting (mounting) a physical file system path from the host to the container's virtual file system. When a container writes to its file system, the data is automatically written to the host file system directory and vice versa. This ensures data persistence across container restarts.
+
+Q: What are the different types of Docker Volumes?
+A: There are three types of Docker Volumes:
+- Host Volumes: You specify the exact host filesystem path to mount
+- Anonymous Volumes: Docker automatically creates and manages the host directory under /var/lib/docker/volumes
+- Named Volumes: Similar to anonymous volumes but with user-defined names for easier reference
+
+Q: Which type of Docker Volume is recommended for production use?
+A: Named Volumes are recommended for production use because they provide the benefits of Docker-managed volumes while allowing easy reference through custom names.
+
+Q: How are volumes defined in Docker Compose?
+A: In Docker Compose:
+- Volumes are defined under a volumes attribute in the service definition
+- The volume name and container path are specified
+- All volumes must be listed at the root level of the compose file
+- Multiple containers can mount the same volume for data sharing
+
+Q: What happens to data in a container without volumes?
+A: Without volumes, data is stored in the container's virtual file system and is lost when the container is removed or restarted. The container starts from a fresh state each time.
+
+Q: Can multiple containers share the same volume?
+A: Yes, multiple containers can mount and share the same volume, which is beneficial when containers need to share data between them.
