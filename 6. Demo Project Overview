@@ -213,3 +213,39 @@ A:
 5. Monitor database operations in real-time
 
 This setup provides a complete development environment with proper isolation, networking, and management capabilities.
+
+Q: How does Jenkins handle Docker image deployment?
+A: Jenkins executes the same Docker commands as done on a local laptop. The Jenkins server user must have credentials to the Docker repository to execute Docker login. Jenkins tags the image and pushes it to the repository.
+
+Q: What is required to deploy an application after packaging it as a Docker image?
+A: After packaging an application in a Docker image and saving it in a private repository, you need:
+- Docker Compose for deployment
+- Docker login credentials on the deployment server
+- Docker Compose file with proper configuration
+- Access to both private repository and Docker Hub
+
+Q: How do you specify images from different repositories in Docker Compose?
+A: 
+- For Docker Hub images: You can use the short format (e.g., mongo:latest)
+- For private repository images: You must specify the full repository path including the domain
+
+Q: What configurations are needed in Docker Compose for application deployment?
+A:
+- Port mappings (e.g., 3000:3000)
+- Environment variables
+- Service names
+- Image locations
+- Network configurations
+
+Q: How do containers communicate with each other in a Docker Compose setup?
+A: Containers can communicate using service names defined in Docker Compose instead of localhost. For example, if connecting to MongoDB, you can use the service name (e.g., 'mongodb') instead of 'localhost' in the connection string. Port numbers are optional as they're defined in the Docker Compose configuration.
+
+Q: What are the steps to deploy an application on a development server?
+A:
+1. Execute Docker login on the development server
+2. Create/copy the Docker Compose file to the server
+3. Run docker-compose up command
+4. Verify the application and database are running correctly
+
+Q: What is a limitation mentioned regarding MongoDB data persistence?
+A: The database data is lost every time the container is recreated. This can be solved by using Docker volumes, which is covered in later tutorials.
